@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getBooks } from "./../services/fakeBookService";
+import "../css/styles.css";
 
 class Books extends Component {
   state = {
@@ -13,16 +14,28 @@ class Books extends Component {
           {this.state.books.map((book) => (
             <div className="col-md-4 mb-4" key={book.id}>
               <div className="card rounded-lg" style={{ width: "18rem" }}>
-                <img
-                  className="card-img-top"
-                  style={{ height: "22rem" }}
-                  src={book.volumeInfo.imageLinks.smallThumbnail}
-                  alt=""
-                />
+                <a
+                  href={book.volumeInfo.previewLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <img
+                    className="card-img-top"
+                    style={{ height: "22rem" }}
+                    src={book.volumeInfo.imageLinks.smallThumbnail}
+                    alt=""
+                  />
+                </a>
                 <div className="card-body">
-                  <h5 className="card-title d-block text-truncate">
-                    {book.volumeInfo.title}
-                  </h5>
+                  <a
+                    href={book.volumeInfo.previewLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <h5 className="card-title d-block text-truncate">
+                      {book.volumeInfo.title}
+                    </h5>
+                  </a>
                   <p className="card-text d-block text-truncate">
                     <span>{book.volumeInfo.authors[0]}</span>
                     {book.volumeInfo.authors[1] && (
