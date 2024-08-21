@@ -1,14 +1,22 @@
 import React, { Component } from "react";
+import Pagination from "./common/pagination";
 import { getBooks } from "./../services/fakeBookService";
 import "../css/styles.css";
 
 class Books extends Component {
   state = {
     books: getBooks(),
+    pageSize: 3,
+    currentPage: 1,
+  };
+
+  handlePageChange = (page) => {
+    this.setState({ currentPage: page });
   };
 
   render() {
     const { length: count } = this.state.books;
+    const { pageSize, currentPage } = this.state;
 
     if (count === 0) return <p>There are no movies in the database.</p>;
 
@@ -58,6 +66,12 @@ class Books extends Component {
             ))}
           </div>
         </div>
+        <Pagination
+          itemsCount={count}
+          pageSize={pageSize}
+          currentPage={currentPage}
+          onPageChange={this.handlePageChange}
+        />
       </React.Fragment>
     );
   }
