@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Pagination from "./common/pagination";
 import { getBooks } from "./../services/fakeBookService";
+import { paginate } from "../utils/paginate";
 import "../css/styles.css";
 
 class Books extends Component {
@@ -16,16 +17,18 @@ class Books extends Component {
 
   render() {
     const { length: count } = this.state.books;
-    const { pageSize, currentPage } = this.state;
+    const { pageSize, currentPage, books: allBooks } = this.state;
 
     if (count === 0) return <p>There are no movies in the database.</p>;
+
+    const books = paginate(allBooks, currentPage, pageSize);
 
     return (
       <React.Fragment>
         <p>There are {count} movies in the database.</p>
         <div className="container mt-4">
           <div className="row">
-            {this.state.books.map((book) => (
+            {books.map((book) => (
               <div className="col-md-4 mb-4" key={book.id}>
                 <div className="card rounded-lg" style={{ width: "18rem" }}>
                   <a
