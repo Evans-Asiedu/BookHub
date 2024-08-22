@@ -1,13 +1,18 @@
 import React, { Component } from "react";
-import "./App.css";
+import { ToastContainer } from "react-toastify";
 import Books from "./components/books";
+import "react-toastify/dist/ReactToastify.css";
+import "./App.css";
 
 class App extends Component {
   render() {
     return (
-      <main className="container">
-        <Books />
-      </main>
+      <React.Fragment>
+        <ToastContainer />
+        <main className="container">
+          <Books />
+        </main>
+      </React.Fragment>
     );
   }
 }

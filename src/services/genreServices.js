@@ -1,7 +1,7 @@
 export const genres = [
   { id: 0, name: "All" },
-  { id: 1, name: "Fiction" },
-  { id: 2, name: "Non-fiction" },
+  { id: 1, name: "Poetry" },
+  { id: 2, name: "Philosophy" },
   { id: 3, name: "Mystery" },
   { id: 4, name: "Romance" },
   { id: 5, name: "Science" },
