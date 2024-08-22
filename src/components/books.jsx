@@ -26,9 +26,17 @@ class Books extends Component {
 
   handleGenreSelect = async (genre) => {
     let { name } = genre;
+    if (name === "All") name = this.getRandomQuery();
+    else name = `subject:${name}`;
     const { data } = await getBooks(name);
     const { items: books } = data;
     this.setState({ books, selectedGenre: genre, currentPage: 1 });
+  };
+
+  getRandomQuery = () => {
+    const alphabet = "abcdefghijklmnopqrstuvwxyz";
+    const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+    return randomLetter;
   };
 
   render() {
