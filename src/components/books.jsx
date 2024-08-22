@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
 import { getBooks } from "./../services/fakeBookService";
-import { genres, getGenres } from "../services/genreServices";
+import { getGenres } from "../services/genreServices";
 import { paginate } from "../utils/paginate";
 import "../css/styles.css";
 
@@ -23,6 +23,7 @@ class Books extends Component {
   };
 
   handleGenreSelect = (genre) => {
+    this.setState({ selectedGenre: genre, currentPage: 1 });
     console.log(genre);
   };
 
@@ -39,6 +40,7 @@ class Books extends Component {
         <div className="col-3">
           <ListGroup
             items={this.state.genres}
+            selectedItem={this.state.selectedGenre}
             onItemSelect={this.handleGenreSelect}
           />
         </div>
