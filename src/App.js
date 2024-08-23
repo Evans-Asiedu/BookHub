@@ -13,7 +13,7 @@ class App extends Component {
       <React.Fragment>
         <ToastContainer />
         <NavBar />
-        <main className="container pt-5">
+        <main className="container pt-3 pt-md-5">
           {/* <Books /> */}
           <Routes>
             <Route path="/" element={<Books />} />

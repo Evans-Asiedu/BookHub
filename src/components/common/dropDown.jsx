@@ -1,10 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 
 const DropDown = ({ items, onItemSelect, selectedItem }) => {
   return (
     <div className="dropdown">
       <button
-        className="btn btn-secondary dropdown-toggle"
+        className="btn btn-primary dropdown-toggle"
         type="button"
         id="dropdownMenuButton"
         data-toggle="dropdown"

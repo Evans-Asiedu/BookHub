@@ -87,7 +87,7 @@ class Books extends Component {
 
     return (
       <div className="row">
-        <div className="col-12 col-md-3 col-lg-2 mb-3">
+        <div className="col-12 col-md-3 col-lg-2 text-md-left text-right mb-3">
           <div className="dropdown-component">
             <DropDown
               items={this.state.genres}
@@ -104,7 +104,7 @@ class Books extends Component {
           </div>
         </div>
         <div className="col">
-          <p className="pb-1">Showing {totalCount} books in the database.</p>
+          <h4 className="pb-1">Showing {totalCount} books in the database.</h4>
           <SearchBox
             value={searchQuery}
             onChange={this.handleSearch}
