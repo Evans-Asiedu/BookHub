@@ -52,11 +52,11 @@ class Books extends Component {
 
   handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      this.getBooksData(e.currentTarget.value);
+      this.getSearchBookData(e.currentTarget.value);
     }
   };
 
-  async getBooksData(searchQuery) {
+  async getSearchBookData(searchQuery) {
     const { data } = await getSearchBooks(searchQuery);
     const { items: books } = data;
     this.setState({
