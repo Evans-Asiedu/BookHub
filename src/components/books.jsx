@@ -7,6 +7,7 @@ import { getGenres } from "../services/genreServices";
 import { paginate } from "../utils/paginate";
 import "../css/styles.css";
 import BooksGrid from "./booksGrid";
+import DropDown from "./common/dropDown";
 
 class Books extends Component {
   state = {
@@ -86,12 +87,21 @@ class Books extends Component {
 
     return (
       <div className="row">
-        <div className="col-2">
-          <ListGroup
-            items={this.state.genres}
-            selectedItem={this.state.selectedGenre}
-            onItemSelect={this.handleGenreSelect}
-          />
+        <div className="col-12 col-md-3 col-lg-2 mb-3">
+          <div className="dropdown-component">
+            <DropDown
+              items={this.state.genres}
+              selectedItem={this.state.selectedGenre}
+              onItemSelect={this.handleGenreSelect}
+            />
+          </div>
+          <div className="listgroup-component">
+            <ListGroup
+              items={this.state.genres}
+              selectedItem={this.state.selectedGenre}
+              onItemSelect={this.handleGenreSelect}
+            />
+          </div>
         </div>
         <div className="col">
           <p className="pb-1">Showing {totalCount} books in the database.</p>

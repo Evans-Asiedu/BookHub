@@ -20,7 +20,7 @@ const Card = ({ book }) => {
   };
 
   return (
-    <div className="col-md-4 mb-4" key={book.id}>
+    <div className="col-md-6 col-lg-4 mb-4" key={book.id}>
       <div className="card rounded-lg" style={{ width: "17rem" }}>
         <a
           href={book.volumeInfo.previewLink}

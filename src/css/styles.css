@@ -7,3 +7,15 @@ a:hover {
   text-decoration: none;
   color: #c45500;
 }
+
+@media screen and (max-width: 768px) {
+  .listgroup-component {
+    display: none;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .dropdown-component {
+    display: none;
+  }
+}
