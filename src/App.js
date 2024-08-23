@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Routes, Redirect } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Books from "./components/books";
 import NavBar from "./components/navBar";
@@ -14,12 +14,13 @@ class App extends Component {
         <ToastContainer />
         <NavBar />
         <main className="container pt-5">
-          <Switch>
-            <Route path="/books" component={Books} />
-            <Route path="/not-found" component={NotFound} />
-            <Redirect from="/" exact to="/books" />
-            <Redirect to="/not-found" />
-          </Switch>
+          {/* <Books /> */}
+          <Routes>
+            <Route path="/" element={<Books />} />
+            <Route path="/books" element={<Books />} />
+            <Route path="/not-found" element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
         </main>
       </React.Fragment>
     );
