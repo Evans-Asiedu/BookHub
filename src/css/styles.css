@@ -8,14 +8,34 @@ a:hover {
   color: #c45500;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 766px) {
   .listgroup-component {
     display: none;
   }
 }
 
-@media screen and (min-width: 769px) {
+@media screen and (min-width: 768px) {
   .dropdown-component {
     display: none;
+  }
+}
+
+/* book card */
+
+@media screen and (max-width: 766px) {
+  .card-size {
+    width: 20rem;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .card-size {
+    width: 15rem;
+  }
+}
+
+@media screen and (min-width: 969px) {
+  .card-size {
+    width: 17rem;
   }
 }

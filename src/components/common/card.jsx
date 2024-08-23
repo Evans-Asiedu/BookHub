@@ -1,4 +1,5 @@
 import React from "react";
+import "../../css/styles.css";
 
 const Card = ({ book }) => {
   const renderImage = (bookImage) => {
@@ -20,8 +21,11 @@ const Card = ({ book }) => {
   };
 
   return (
-    <div className="col-md-6 col-lg-4 mb-4" key={book.id}>
-      <div className="card rounded-lg" style={{ width: "17rem" }}>
+    <div className="col-md-6 col-lg-4 mb-4 " key={book.id}>
+      <div
+        className="card rounded-lg card-size mx-auto"
+        // style={{ width: "17rem" }}
+      >
         <a
           href={book.volumeInfo.previewLink}
           target="_blank"
