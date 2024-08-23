@@ -6,6 +6,7 @@ import { getBooks, getSearchBooks } from "./../services/bookService";
 import { getGenres } from "../services/genreServices";
 import { paginate } from "../utils/paginate";
 import "../css/styles.css";
+import BooksGrid from "./booksGrid";
 
 class Books extends Component {
   state = {
@@ -67,13 +68,21 @@ class Books extends Component {
     });
   }
 
+  getPageData = () => {
+    const { currentPage, pageSize, books: allBooks } = this.state;
+
+    const books = paginate(allBooks, currentPage, pageSize);
+
+    return { totalCount: books.length, books };
+  };
+
   render() {
     const { length: count } = this.state.books;
-    const { pageSize, searchQuery, currentPage, books: allBooks } = this.state;
+    const { pageSize, searchQuery, currentPage } = this.state;
 
     if (count === 0) return <p>There are no books in the database.</p>;
 
-    const books = paginate(allBooks, currentPage, pageSize);
+    const { totalCount, books } = this.getPageData();
 
     return (
       <div className="row">
@@ -85,65 +94,13 @@ class Books extends Component {
           />
         </div>
         <div className="col">
-          <p>There are {books.length} books in the database.</p>
+          <p className="pb-1">Showing {totalCount} books in the database.</p>
           <SearchBox
             value={searchQuery}
             onChange={this.handleSearch}
             onKeyDown={this.handleKeyDown}
           />
-          <div className="container mt-4">
-            <div className="row">
-              {books.map((book) => (
-                <div className="col-md-4 mb-4" key={book.id}>
-                  <div className="card rounded-lg" style={{ width: "17rem" }}>
-                    <a
-                      href={book.volumeInfo.previewLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <img
-                        className="card-img-top"
-                        style={{ height: "17rem" }}
-                        src={
-                          book.volumeInfo.imageLinks
-                            ? book.volumeInfo.imageLinks.smallThumbnail
-                            : "https://media.istockphoto.com/id/1411701868/photo/magic-book-with-glitter-open-book-with-lights-glowing-in-dark-background.jpg?s=2048x2048&w=is&k=20&c=AKbxbPjl_pIna-t3O7-MA3_vXlQGVt4zF9EiawlsdiQ="
-                        }
-                        alt="book-image"
-                      />
-                    </a>
-                    <div className="card-body">
-                      <a
-                        href={book.volumeInfo.previewLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <h5 className="card-title d-block text-truncate">
-                          {book.volumeInfo.title}
-                        </h5>
-                      </a>
-                      <p className="card-text d-block text-truncate">
-                        {book.volumeInfo.authors && (
-                          <span>
-                            <span>{book.volumeInfo.authors[0]}</span>
-                            {book.volumeInfo.authors[1] && (
-                              <span> & {book.volumeInfo.authors[1]}</span>
-                            )}
-                          </span>
-                        )}
-                      </p>
-                      <footer className="text-muted d-flex justify-content-between">
-                        <span>{book.volumeInfo.categories}</span>
-                        {book.volumeInfo.pageCount > 0 && (
-                          <span>{book.volumeInfo.pageCount} pages</span>
-                        )}
-                      </footer>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
+          <BooksGrid books={books} />
           <Pagination
             itemsCount={count}
             pageSize={pageSize}
