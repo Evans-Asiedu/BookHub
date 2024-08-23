@@ -10,3 +10,7 @@ export function getBooks(genre) {
     `${apiEndpoint}${genre}&startIndex=${randomStartIndex}&maxResults=${maxNumber.toString()}`
   );
 }
+
+export function getSearchBooks(query) {
+  return http.get(`${apiEndpoint}${query}`);
+}

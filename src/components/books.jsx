@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import Pagination from "./common/pagination";
 import ListGroup from "./common/listGroup";
-import { getBooks } from "./../services/bookService";
+import SearchBox from "./searchBox";
+import { getBooks, getSearchBooks } from "./../services/bookService";
 import { getGenres } from "../services/genreServices";
 import { paginate } from "../utils/paginate";
 import "../css/styles.css";
@@ -12,6 +13,7 @@ class Books extends Component {
     genres: [],
     pageSize: 6,
     currentPage: 1,
+    searchQuery: "",
   };
 
   async componentDidMount() {
@@ -30,7 +32,12 @@ class Books extends Component {
     else name = `subject:${name}`;
     const { data } = await getBooks(name);
     const { items: books } = data;
-    this.setState({ books, selectedGenre: genre, currentPage: 1 });
+    this.setState({
+      books,
+      selectedGenre: genre,
+      currentPage: 1,
+      searchQuery: " ",
+    });
   };
 
   getRandomQuery = () => {
@@ -39,9 +46,30 @@ class Books extends Component {
     return randomLetter;
   };
 
+  handleSearch = (query) => {
+    this.setState({ searchQuery: query });
+  };
+
+  handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      this.getBooksData(e.currentTarget.value);
+    }
+  };
+
+  async getBooksData(searchQuery) {
+    const { data } = await getSearchBooks(searchQuery);
+    const { items: books } = data;
+    this.setState({
+      searchQuery,
+      books,
+      selectedGenre: null,
+      currentPage: 1,
+    });
+  }
+
   render() {
     const { length: count } = this.state.books;
-    const { pageSize, currentPage, books: allBooks } = this.state;
+    const { pageSize, searchQuery, currentPage, books: allBooks } = this.state;
 
     if (count === 0) return <p>There are no books in the database.</p>;
 
@@ -58,6 +86,11 @@ class Books extends Component {
         </div>
         <div className="col">
           <p>There are {books.length} books in the database.</p>
+          <SearchBox
+            value={searchQuery}
+            onChange={this.handleSearch}
+            onKeyDown={this.handleKeyDown}
+          />
           <div className="container mt-4">
             <div className="row">
               {books.map((book) => (
