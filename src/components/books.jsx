@@ -16,6 +16,8 @@ class Books extends Component {
     pageSize: 6,
     currentPage: 1,
     searchQuery: "",
+    previousGenre: "",
+    previousSearchQuery: "",
   };
 
   async componentDidMount() {
@@ -30,23 +32,17 @@ class Books extends Component {
   };
 
   handleGenreSelect = async (genre) => {
-    let { name } = genre;
-    if (name === "All") name = this.getRandomQuery();
-    else name = `subject:${name}`;
-    const { data } = await getBooks(name);
-    const { items: books } = data;
+    const { previousGenre } = this.state;
+    const { name: currentGenre } = genre;
+    if (currentGenre === previousGenre) return;
+    const books = await this.getBooksData(currentGenre);
     this.setState({
       books,
       selectedGenre: genre,
       currentPage: 1,
       searchQuery: " ",
+      previousGenre: currentGenre,
     });
-  };
-
-  getRandomQuery = () => {
-    const alphabet = "abcdefghijklmnopqrstuvwxyz";
-    const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
-    return randomLetter;
   };
 
   handleSearch = (query) => {
@@ -55,20 +51,12 @@ class Books extends Component {
 
   handleKeyDown = (e) => {
     if (e.key === "Enter") {
-      this.getSearchBookData(e.currentTarget.value);
+      const { previousSearchQuery } = this.state;
+      const currentSearchQuery = e.currentTarget.value;
+      if (currentSearchQuery === previousSearchQuery) return;
+      this.getSearchBookData(currentSearchQuery);
     }
   };
-
-  async getSearchBookData(searchQuery) {
-    const { data } = await getSearchBooks(searchQuery);
-    const { items: books } = data;
-    this.setState({
-      searchQuery,
-      books,
-      selectedGenre: null,
-      currentPage: 1,
-    });
-  }
 
   getPageData = () => {
     const { currentPage, pageSize, books: allBooks } = this.state;
@@ -82,7 +70,7 @@ class Books extends Component {
     const { length: count } = this.state.books;
     const { pageSize, searchQuery, currentPage } = this.state;
 
-    if (count === 0) return <p>There are no books in the database.</p>;
+    if (count === 0) return <p>Loading...</p>;
 
     const { totalCount, books } = this.getPageData();
 
@@ -121,6 +109,34 @@ class Books extends Component {
         </div>
       </div>
     );
+  }
+
+  async getBooksData(genre) {
+    if (genre === "All") genre = this.getRandomQuery();
+    else genre = `subject:${genre}`;
+
+    const { data } = await getBooks(genre);
+    const { items: books } = data;
+
+    return books;
+  }
+
+  getRandomQuery = () => {
+    const alphabet = "abcdefghijklmnopqrstuvwxyz";
+    const randomLetter = alphabet[Math.floor(Math.random() * alphabet.length)];
+    return randomLetter;
+  };
+
+  async getSearchBookData(searchQuery) {
+    const { data } = await getSearchBooks(searchQuery);
+    const { items: books } = data;
+    this.setState({
+      searchQuery,
+      books,
+      selectedGenre: null,
+      currentPage: 1,
+      previousSearchQuery: searchQuery,
+    });
   }
 }
 
