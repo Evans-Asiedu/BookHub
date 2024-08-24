@@ -6,7 +6,7 @@ const BooksGrid = ({ books }) => {
     <div className="container mt-4 px-0">
       <div className="row">
         {books.map((book) => (
-          <Card book={book} />
+          <Card key={book.id} book={book} />
         ))}
       </div>
     </div>
