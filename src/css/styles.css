@@ -20,8 +20,12 @@ a:hover {
   }
 }
 
-/* book card */
+/* nav bar */
+.bg-color {
+  background-color: #007bff;
+}
 
+/* book card */
 @media screen and (max-width: 766px) {
   .card-size {
     width: 20rem;
