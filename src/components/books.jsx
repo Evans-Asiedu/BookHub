@@ -19,7 +19,8 @@ class Books extends Component {
   };
 
   async componentDidMount() {
-    const { data } = await getBooks("all");
+    const query = this.getRandomQuery();
+    const { data } = await getBooks(query);
     const { items: books } = data;
     this.setState({ books, genres: getGenres() });
   }
@@ -104,7 +105,7 @@ class Books extends Component {
           </div>
         </div>
         <div className="col">
-          <h4 className="pb-1">Showing {totalCount} books in the database.</h4>
+          <h4 className="pb-1">Showing {totalCount} Books</h4>
           <SearchBox
             value={searchQuery}
             onChange={this.handleSearch}

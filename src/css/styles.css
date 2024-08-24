@@ -25,6 +25,12 @@ a:hover {
   background-color: #007bff;
 }
 
+/* list-group */
+.list-group-item:hover,
+.dropdown-item:hover {
+  cursor: pointer;
+}
+
 /* book card */
 @media screen and (max-width: 766px) {
   .card-size {
